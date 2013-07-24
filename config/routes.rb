@@ -1,5 +1,14 @@
 NestedResources::Application.routes.draw do
 
+  resources :cities
+
+
+  resources :states
+
+
+  resources :countries
+
+
   # Site Pages
   root :to => "pages#home"
   get "/about", :to => "pages#about"
