@@ -3,7 +3,7 @@ class NotepadsController < ApplicationController
 
   # GET
   def index
-    @notepads = Notepad.all
+    @notepads = @user.notepads
 
     respond_to do |format|
       format.html # index.html.erb
