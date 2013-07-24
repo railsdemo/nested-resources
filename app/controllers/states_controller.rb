@@ -1,8 +1,8 @@
 class StatesController < ApplicationController
-  # GET /states
-  # GET /states.json
+  before_filter :load_country, only: [:index, :create, :new]
+  # GET
   def index
-    @states = State.all
+    @states = @country.states
 
     respond_to do |format|
       format.html # index.html.erb
@@ -10,10 +10,10 @@ class StatesController < ApplicationController
     end
   end
 
-  # GET /states/1
-  # GET /states/1.json
+  # GET
   def show
     @state = State.find(params[:id])
+    @cities = @state.cities
 
     respond_to do |format|
       format.html # show.html.erb
@@ -21,10 +21,9 @@ class StatesController < ApplicationController
     end
   end
 
-  # GET /states/new
-  # GET /states/new.json
+  # GET
   def new
-    @state = State.new
+    @state = @country.states.new
 
     respond_to do |format|
       format.html # new.html.erb
@@ -32,15 +31,14 @@ class StatesController < ApplicationController
     end
   end
 
-  # GET /states/1/edit
+  # GET
   def edit
     @state = State.find(params[:id])
   end
 
-  # POST /states
-  # POST /states.json
+  # POST
   def create
-    @state = State.new(params[:state])
+    @state = @country.states.new(params[:state])
 
     respond_to do |format|
       if @state.save
@@ -53,8 +51,7 @@ class StatesController < ApplicationController
     end
   end
 
-  # PUT /states/1
-  # PUT /states/1.json
+  # PUT
   def update
     @state = State.find(params[:id])
 
@@ -69,15 +66,19 @@ class StatesController < ApplicationController
     end
   end
 
-  # DELETE /states/1
-  # DELETE /states/1.json
+  # DELETE
   def destroy
     @state = State.find(params[:id])
     @state.destroy
 
     respond_to do |format|
-      format.html { redirect_to states_url }
+      format.html { redirect_to country_states_path(@state.country_id) }
       format.json { head :no_content }
     end
+  end
+
+  protected
+  def load_country
+      @country = Country.find_by_id(params[:country_id])
   end
 end

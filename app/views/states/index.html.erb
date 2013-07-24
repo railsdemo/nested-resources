@@ -13,11 +13,11 @@
 <% @states.each do |state| %>
   <tr>
     <td><%= state.name %></td>
-    <td><%= state.country_id %></td>
+    <td><%= state.country.name %></td>
     <td><%= link_to 'Show', state %></td>
     <td><%= link_to 'Edit', edit_state_path(state) %></td>
     <td><%= link_to 'Destroy', state, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-    <td><%= link_to 'New City', new_city_path %></td>
+    <td><%= link_to 'New City', new_state_city_path(state) %></td>
   </tr>
 <% end %>
 </table>
