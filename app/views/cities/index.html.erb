@@ -22,4 +22,6 @@
 
 <br />
 
-<%= link_to 'New City', new_city_path %>
+<% if @state %>
+  <%= link_to 'New City', new_state_city_path(@state) %>
+<% end %>
