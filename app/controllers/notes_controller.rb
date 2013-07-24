@@ -1,8 +1,9 @@
 class NotesController < ApplicationController
-  # GET /notes
-  # GET /notes.json
+  before_filter :load_notepad, only: [:index, :create, :new]
+
+  # GET
   def index
-    @notes = Note.all
+    @notes = @notepad.notes
 
     respond_to do |format|
       format.html # index.html.erb
@@ -10,8 +11,7 @@ class NotesController < ApplicationController
     end
   end
 
-  # GET /notes/1
-  # GET /notes/1.json
+  # GET
   def show
     @note = Note.find(params[:id])
 
@@ -21,10 +21,9 @@ class NotesController < ApplicationController
     end
   end
 
-  # GET /notes/new
-  # GET /notes/new.json
+  # GET
   def new
-    @note = Note.new
+    @note = @notepad.notes.new
 
     respond_to do |format|
       format.html # new.html.erb
@@ -32,15 +31,14 @@ class NotesController < ApplicationController
     end
   end
 
-  # GET /notes/1/edit
+  # GET
   def edit
     @note = Note.find(params[:id])
   end
 
-  # POST /notes
-  # POST /notes.json
+  # POST
   def create
-    @note = Note.new(params[:note])
+    @note = @notepad.notes.new(params[:note])
 
     respond_to do |format|
       if @note.save
@@ -53,8 +51,7 @@ class NotesController < ApplicationController
     end
   end
 
-  # PUT /notes/1
-  # PUT /notes/1.json
+  # PUT
   def update
     @note = Note.find(params[:id])
 
@@ -69,15 +66,19 @@ class NotesController < ApplicationController
     end
   end
 
-  # DELETE /notes/1
-  # DELETE /notes/1.json
+  # DELETE
   def destroy
     @note = Note.find(params[:id])
     @note.destroy
 
     respond_to do |format|
-      format.html { redirect_to notes_url }
+      format.html { redirect_to notepad_notes_url(@note.notepad_id) }
       format.json { head :no_content }
     end
+  end
+
+  protected
+  def load_notepad
+      @notepad = Notepad.find_by_id(params[:notepad_id])
   end
 end

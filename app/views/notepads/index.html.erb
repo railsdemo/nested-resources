@@ -7,6 +7,7 @@
     <th></th>
     <th></th>
     <th></th>
+    <th></th>
   </tr>
 
 <% @notepads.each do |notepad| %>
@@ -16,6 +17,7 @@
     <td><%= link_to 'Show', notepad %></td>
     <td><%= link_to 'Edit', edit_notepad_path(notepad) %></td>
     <td><%= link_to 'Destroy', notepad, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+    <td><%= link_to 'New Note', new_notepad_note_path(notepad) %></td>
   </tr>
 <% end %>
 </table>

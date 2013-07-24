@@ -14,7 +14,7 @@
   <tr>
     <td><%= note.content %></td>
     <td><%= note.name %></td>
-    <td><%= note.notepad_id %></td>
+    <td><%= note.notepad.name %></td>
     <td><%= link_to 'Show', note %></td>
     <td><%= link_to 'Edit', edit_note_path(note) %></td>
     <td><%= link_to 'Destroy', note, method: :delete, data: { confirm: 'Are you sure?' } %></td>
@@ -24,4 +24,6 @@
 
 <br />
 
-<%= link_to 'New Note', new_note_path %>
+<% if @notepad %>
+  <%= link_to 'New Note', new_notepad_note_path(@notepad) %>
+<% end %>
