@@ -1,14 +1,5 @@
 NestedResources::Application.routes.draw do
 
-  resources :cities
-
-
-  resources :states
-
-
-  resources :countries
-
-
   # Site Pages
   root :to => "pages#home"
   get "/about", :to => "pages#about"
@@ -25,5 +16,14 @@ NestedResources::Application.routes.draw do
   end
   
   # Common Data Resources
+  scope 'info' do 
+    shallow do
+      resources :countries do
+        resources :states do
+          resources :cities
+        end
+      end
+    end
+  end
 
 end
