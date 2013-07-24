@@ -1,0 +1,15 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Name:</b>
+  <%= @notepad.name %>
+</p>
+
+<p>
+  <b>User:</b>
+  <%= @notepad.user_id %>
+</p>
+
+
+<%= link_to 'Edit', edit_notepad_path(@notepad) %> |
+<%= link_to 'Back', notepads_path %>

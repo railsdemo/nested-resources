@@ -1,0 +1,25 @@
+<h1>Listing notepads</h1>
+
+<table>
+  <tr>
+    <th>Name</th>
+    <th>User</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @notepads.each do |notepad| %>
+  <tr>
+    <td><%= notepad.name %></td>
+    <td><%= notepad.user_id %></td>
+    <td><%= link_to 'Show', notepad %></td>
+    <td><%= link_to 'Edit', edit_notepad_path(notepad) %></td>
+    <td><%= link_to 'Destroy', notepad, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Notepad', new_notepad_path %>
