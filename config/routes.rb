@@ -1,13 +1,4 @@
 NestedResources::Application.routes.draw do
-  
-  resources :notes
-
-
-  resources :notepads
-
-
-  resources :users
-
 
   # Site Pages
   root :to => "pages#home"
@@ -16,7 +7,14 @@ NestedResources::Application.routes.draw do
   get "/contact", :to => "pages#contact"
 
   # Site Resources
-
+  shallow do 
+    resources :users do
+      resources :notepads do
+        resources :notes
+      end
+    end
+  end
+  
   # Common Data Resources
 
 end
