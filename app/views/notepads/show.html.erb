@@ -1,3 +1,4 @@
+<h1>Notepad: <%= @notepad.name %></h1>
 <p id="notice"><%= notice %></p>
 
 <p>
@@ -10,6 +11,9 @@
   <%= @notepad.user_id %>
 </p>
 
+<%= render file: '/notes/index' %>
+
+<br><br>
 
 <%= link_to 'Edit', edit_notepad_path(@notepad) %> |
-<%= link_to 'Back', notepads_path %>
+<%= link_to 'Back', user_notepads_path(@notepad.user_id) %>

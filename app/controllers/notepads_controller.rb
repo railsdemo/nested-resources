@@ -1,6 +1,7 @@
 class NotepadsController < ApplicationController
-  # GET /notepads
-  # GET /notepads.json
+  before_filter :load_user, only: [:index, :create, :new]
+
+  # GET
   def index
     @notepads = Notepad.all
 
@@ -10,10 +11,10 @@ class NotepadsController < ApplicationController
     end
   end
 
-  # GET /notepads/1
-  # GET /notepads/1.json
+  # GET
   def show
     @notepad = Notepad.find(params[:id])
+    @notes = @notepad.notes
 
     respond_to do |format|
       format.html # show.html.erb
@@ -21,10 +22,9 @@ class NotepadsController < ApplicationController
     end
   end
 
-  # GET /notepads/new
-  # GET /notepads/new.json
+  # GET
   def new
-    @notepad = Notepad.new
+    @notepad = @user.notepads.new
 
     respond_to do |format|
       format.html # new.html.erb
@@ -32,15 +32,14 @@ class NotepadsController < ApplicationController
     end
   end
 
-  # GET /notepads/1/edit
+  # GET
   def edit
     @notepad = Notepad.find(params[:id])
   end
 
-  # POST /notepads
-  # POST /notepads.json
+  # POST
   def create
-    @notepad = Notepad.new(params[:notepad])
+    @notepad = @user.notepads.new(params[:notepad])
 
     respond_to do |format|
       if @notepad.save
@@ -53,8 +52,7 @@ class NotepadsController < ApplicationController
     end
   end
 
-  # PUT /notepads/1
-  # PUT /notepads/1.json
+  # PUT
   def update
     @notepad = Notepad.find(params[:id])
 
@@ -69,15 +67,19 @@ class NotepadsController < ApplicationController
     end
   end
 
-  # DELETE /notepads/1
-  # DELETE /notepads/1.json
+  # DELETE
   def destroy
     @notepad = Notepad.find(params[:id])
     @notepad.destroy
 
     respond_to do |format|
-      format.html { redirect_to notepads_url }
+      format.html { redirect_to user_notepads_path(@notepad.user_id) }
       format.json { head :no_content }
     end
+  end
+
+  protected
+  def load_user
+      @user = User.find_by_id(params[:user_id])
   end
 end
