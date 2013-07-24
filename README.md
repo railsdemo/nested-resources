@@ -1,5 +1,7 @@
 ##Nested Resources Demo
 
+[Heroku Demo Link](http://nested-resources.herokuapp.com/)
+
 A demo of nesting that follows these guidelines:
 
 1. **Nested URL Structure** - *Resources should never nested more than 1 level deep* - Jamis Buck
