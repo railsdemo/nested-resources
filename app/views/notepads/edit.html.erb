@@ -3,4 +3,4 @@
 <%= render 'form' %>
 
 <%= link_to 'Show', @notepad %> |
-<%= link_to 'Back', notepads_path %>
+<%= link_to 'Back', user_notepads_path(@notepad.user_id) %>
