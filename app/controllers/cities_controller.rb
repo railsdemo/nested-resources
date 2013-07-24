@@ -1,8 +1,9 @@
 class CitiesController < ApplicationController
-  # GET /cities
-  # GET /cities.json
+  before_filter :load_state, only: [:index, :create, :new]
+  
+  # GET
   def index
-    @cities = City.all
+    @cities = @state.cities
 
     respond_to do |format|
       format.html # index.html.erb
@@ -10,8 +11,7 @@ class CitiesController < ApplicationController
     end
   end
 
-  # GET /cities/1
-  # GET /cities/1.json
+  # GET
   def show
     @city = City.find(params[:id])
 
@@ -21,10 +21,9 @@ class CitiesController < ApplicationController
     end
   end
 
-  # GET /cities/new
-  # GET /cities/new.json
+  # GET
   def new
-    @city = City.new
+    @city = @state.cities.new
 
     respond_to do |format|
       format.html # new.html.erb
@@ -32,15 +31,14 @@ class CitiesController < ApplicationController
     end
   end
 
-  # GET /cities/1/edit
+  # GET
   def edit
     @city = City.find(params[:id])
   end
 
-  # POST /cities
-  # POST /cities.json
+  # POST
   def create
-    @city = City.new(params[:city])
+    @city = @state.cities.new(params[:city])
 
     respond_to do |format|
       if @city.save
@@ -53,8 +51,7 @@ class CitiesController < ApplicationController
     end
   end
 
-  # PUT /cities/1
-  # PUT /cities/1.json
+  # PUT
   def update
     @city = City.find(params[:id])
 
@@ -69,15 +66,19 @@ class CitiesController < ApplicationController
     end
   end
 
-  # DELETE /cities/1
-  # DELETE /cities/1.json
+  # DELETE
   def destroy
     @city = City.find(params[:id])
     @city.destroy
 
     respond_to do |format|
-      format.html { redirect_to cities_url }
+      format.html { redirect_to state_cities_path(@city.state_id) }
       format.json { head :no_content }
     end
+  end
+
+  protected
+  def load_state
+      @state = State.find_by_id(params[:state_id])
   end
 end

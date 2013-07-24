@@ -3,4 +3,4 @@
 <%= render 'form' %>
 
 <%= link_to 'Show', @city %> |
-<%= link_to 'Back', cities_path %>
+<%= link_to 'Back', state_cities_path(@city.state_id) %>
