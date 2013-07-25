@@ -2,8 +2,8 @@
 
 <table>
   <tr>
-    <th>Content</th>
     <th>Name</th>
+    <th>Content</th>
     <th>Notepad</th>
     <th></th>
     <th></th>
@@ -12,8 +12,8 @@
 
 <% @notes.each do |note| %>
   <tr>
-    <td><%= note.content %></td>
     <td><%= note.name %></td>
+    <td><%= note.content %></td>
     <td><%= note.notepad.name %></td>
     <td><%= link_to 'Show', note %></td>
     <td><%= link_to 'Edit', edit_note_path(note) %></td>
