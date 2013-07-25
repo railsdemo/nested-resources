@@ -23,7 +23,8 @@ A mix of resources listed here:
 
 Rake Routes:
 
-                 root        /                                                pages#home
+               Prefix Verb   URI Pattern                                      Controller#Action
+                 root GET    /                                                pages#home
                 about GET    /about(.:format)                                 pages#about
                  help GET    /help(.:format)                                  pages#help
               contact GET    /contact(.:format)                               pages#contact
@@ -32,6 +33,7 @@ Rake Routes:
      new_notepad_note GET    /notepads/:notepad_id/notes/new(.:format)        notes#new
             edit_note GET    /notes/:id/edit(.:format)                        notes#edit
                  note GET    /notes/:id(.:format)                             notes#show
+                      PATCH  /notes/:id(.:format)                             notes#update
                       PUT    /notes/:id(.:format)                             notes#update
                       DELETE /notes/:id(.:format)                             notes#destroy
         user_notepads GET    /users/:user_id/notepads(.:format)               notepads#index
@@ -39,6 +41,7 @@ Rake Routes:
      new_user_notepad GET    /users/:user_id/notepads/new(.:format)           notepads#new
          edit_notepad GET    /notepads/:id/edit(.:format)                     notepads#edit
               notepad GET    /notepads/:id(.:format)                          notepads#show
+                      PATCH  /notepads/:id(.:format)                          notepads#update
                       PUT    /notepads/:id(.:format)                          notepads#update
                       DELETE /notepads/:id(.:format)                          notepads#destroy
                 users GET    /users(.:format)                                 users#index
@@ -46,6 +49,7 @@ Rake Routes:
              new_user GET    /users/new(.:format)                             users#new
             edit_user GET    /users/:id/edit(.:format)                        users#edit
                  user GET    /users/:id(.:format)                             users#show
+                      PATCH  /users/:id(.:format)                             users#update
                       PUT    /users/:id(.:format)                             users#update
                       DELETE /users/:id(.:format)                             users#destroy
          state_cities GET    /info/states/:state_id/cities(.:format)          cities#index
@@ -53,6 +57,7 @@ Rake Routes:
        new_state_city GET    /info/states/:state_id/cities/new(.:format)      cities#new
             edit_city GET    /info/cities/:id/edit(.:format)                  cities#edit
                  city GET    /info/cities/:id(.:format)                       cities#show
+                      PATCH  /info/cities/:id(.:format)                       cities#update
                       PUT    /info/cities/:id(.:format)                       cities#update
                       DELETE /info/cities/:id(.:format)                       cities#destroy
        country_states GET    /info/countries/:country_id/states(.:format)     states#index
@@ -60,6 +65,7 @@ Rake Routes:
     new_country_state GET    /info/countries/:country_id/states/new(.:format) states#new
            edit_state GET    /info/states/:id/edit(.:format)                  states#edit
                 state GET    /info/states/:id(.:format)                       states#show
+                      PATCH  /info/states/:id(.:format)                       states#update
                       PUT    /info/states/:id(.:format)                       states#update
                       DELETE /info/states/:id(.:format)                       states#destroy
             countries GET    /info/countries(.:format)                        countries#index
@@ -67,5 +73,6 @@ Rake Routes:
           new_country GET    /info/countries/new(.:format)                    countries#new
          edit_country GET    /info/countries/:id/edit(.:format)               countries#edit
               country GET    /info/countries/:id(.:format)                    countries#show
+                      PATCH  /info/countries/:id(.:format)                    countries#update
                       PUT    /info/countries/:id(.:format)                    countries#update
                       DELETE /info/countries/:id(.:format)                    countries#destroy
