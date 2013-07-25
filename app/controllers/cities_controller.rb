@@ -1,4 +1,5 @@
 class CitiesController < ApplicationController
+  before_action :set_city, only: [:show, :edit, :update, :destroy]
   before_filter :load_state, only: [:index, :create, :new]
   
   # GET
@@ -13,8 +14,6 @@ class CitiesController < ApplicationController
 
   # GET
   def show
-    @city = City.find(params[:id])
-
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @city }
@@ -33,12 +32,11 @@ class CitiesController < ApplicationController
 
   # GET
   def edit
-    @city = City.find(params[:id])
   end
 
   # POST
   def create
-    @city = @state.cities.new(params[:city])
+    @city = @state.cities.new(city_params)
 
     respond_to do |format|
       if @city.save
@@ -53,10 +51,8 @@ class CitiesController < ApplicationController
 
   # PUT
   def update
-    @city = City.find(params[:id])
-
     respond_to do |format|
-      if @city.update_attributes(params[:city])
+      if @city.update_attributes(city_params)
         format.html { redirect_to @city, notice: 'City was successfully updated.' }
         format.json { head :no_content }
       else
@@ -68,7 +64,6 @@ class CitiesController < ApplicationController
 
   # DELETE
   def destroy
-    @city = City.find(params[:id])
     @city.destroy
 
     respond_to do |format|
@@ -77,8 +72,17 @@ class CitiesController < ApplicationController
     end
   end
 
-  protected
+  
+  private
+  def set_city
+    @city = City.find(params[:id])
+  end
+
+  def city_params
+    params.require(:city).permit(:name, :state_id)
+  end
+
   def load_state
-      @state = State.find_by_id(params[:state_id])
+    @state = State.find_by_id(params[:state_id])
   end
 end

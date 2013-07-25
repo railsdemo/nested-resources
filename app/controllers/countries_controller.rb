@@ -1,6 +1,7 @@
 class CountriesController < ApplicationController
-  # GET /countries
-  # GET /countries.json
+  before_action :set_country, only: [:show, :edit, :update, :destroy]
+
+  # GET
   def index
     @countries = Country.all
 
@@ -10,10 +11,8 @@ class CountriesController < ApplicationController
     end
   end
 
-  # GET /countries/1
-  # GET /countries/1.json
+  # GET
   def show
-    @country = Country.find(params[:id])
     @states = @country.states
     @cities = @country.cities
     
@@ -23,8 +22,7 @@ class CountriesController < ApplicationController
     end
   end
 
-  # GET /countries/new
-  # GET /countries/new.json
+  # GET
   def new
     @country = Country.new
 
@@ -34,15 +32,13 @@ class CountriesController < ApplicationController
     end
   end
 
-  # GET /countries/1/edit
+  # GET
   def edit
-    @country = Country.find(params[:id])
   end
 
-  # POST /countries
-  # POST /countries.json
+  # POST
   def create
-    @country = Country.new(params[:country])
+    @country = Country.new(country_params)
 
     respond_to do |format|
       if @country.save
@@ -55,13 +51,10 @@ class CountriesController < ApplicationController
     end
   end
 
-  # PUT /countries/1
-  # PUT /countries/1.json
+  # PUT
   def update
-    @country = Country.find(params[:id])
-
     respond_to do |format|
-      if @country.update_attributes(params[:country])
+      if @country.update_attributes(country_params)
         format.html { redirect_to @country, notice: 'Country was successfully updated.' }
         format.json { head :no_content }
       else
@@ -71,15 +64,22 @@ class CountriesController < ApplicationController
     end
   end
 
-  # DELETE /countries/1
-  # DELETE /countries/1.json
+  # DELETE
   def destroy
-    @country = Country.find(params[:id])
     @country.destroy
 
     respond_to do |format|
       format.html { redirect_to countries_url }
       format.json { head :no_content }
     end
+  end
+
+  private
+  def set_country
+    @country = Country.find(params[:id])
+  end
+
+  def country_params
+    params.require(:country).permit(:name)
   end
 end

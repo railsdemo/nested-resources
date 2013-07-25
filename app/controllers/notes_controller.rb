@@ -1,4 +1,5 @@
 class NotesController < ApplicationController
+  before_action :set_note, only: [:show, :edit, :update, :destroy]
   before_filter :load_notepad, only: [:index, :create, :new]
 
   # GET
@@ -13,8 +14,6 @@ class NotesController < ApplicationController
 
   # GET
   def show
-    @note = Note.find(params[:id])
-
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @note }
@@ -33,12 +32,11 @@ class NotesController < ApplicationController
 
   # GET
   def edit
-    @note = Note.find(params[:id])
   end
 
   # POST
   def create
-    @note = @notepad.notes.new(params[:note])
+    @note = @notepad.notes.new(note_params)
 
     respond_to do |format|
       if @note.save
@@ -53,10 +51,8 @@ class NotesController < ApplicationController
 
   # PUT
   def update
-    @note = Note.find(params[:id])
-
     respond_to do |format|
-      if @note.update_attributes(params[:note])
+      if @note.update_attributes(note_params)
         format.html { redirect_to @note, notice: 'Note was successfully updated.' }
         format.json { head :no_content }
       else
@@ -68,7 +64,6 @@ class NotesController < ApplicationController
 
   # DELETE
   def destroy
-    @note = Note.find(params[:id])
     @note.destroy
 
     respond_to do |format|
@@ -77,7 +72,16 @@ class NotesController < ApplicationController
     end
   end
 
-  protected
+  
+  private
+  def set_note
+    @note = Note.find(params[:id])
+  end
+
+  def note_params
+    params.require(:note).permit(:name, :text, :notepad_id)
+  end
+
   def load_notepad
       @notepad = Notepad.find_by_id(params[:notepad_id])
   end

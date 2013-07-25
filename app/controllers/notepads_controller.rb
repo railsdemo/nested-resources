@@ -1,4 +1,5 @@
 class NotepadsController < ApplicationController
+  before_action :set_notepad, only: [:show, :edit, :update, :destroy]
   before_filter :load_user, only: [:index, :create, :new]
 
   # GET
@@ -13,7 +14,6 @@ class NotepadsController < ApplicationController
 
   # GET
   def show
-    @notepad = Notepad.find(params[:id])
     @notes = @notepad.notes
 
     respond_to do |format|
@@ -34,12 +34,11 @@ class NotepadsController < ApplicationController
 
   # GET
   def edit
-    @notepad = Notepad.find(params[:id])
   end
 
   # POST
   def create
-    @notepad = @user.notepads.new(params[:notepad])
+    @notepad = @user.notepads.new(notepad_params)
 
     respond_to do |format|
       if @notepad.save
@@ -54,10 +53,8 @@ class NotepadsController < ApplicationController
 
   # PUT
   def update
-    @notepad = Notepad.find(params[:id])
-
     respond_to do |format|
-      if @notepad.update_attributes(params[:notepad])
+      if @notepad.update_attributes(notepad_params)
         format.html { redirect_to @notepad, notice: 'Notepad was successfully updated.' }
         format.json { head :no_content }
       else
@@ -69,7 +66,6 @@ class NotepadsController < ApplicationController
 
   # DELETE
   def destroy
-    @notepad = Notepad.find(params[:id])
     @notepad.destroy
 
     respond_to do |format|
@@ -78,7 +74,16 @@ class NotepadsController < ApplicationController
     end
   end
 
-  protected
+  
+  private
+  def set_notepad
+    @notepad = Notepad.find(params[:id])
+  end
+
+  def notepad_params
+    params.require(:notepad).permit(:name, :user_id)
+  end
+
   def load_user
       @user = User.find_by_id(params[:user_id])
   end

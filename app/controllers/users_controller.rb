@@ -1,5 +1,7 @@
 class UsersController < ApplicationController
-  # GET
+  before_action :set_user, only: [:show, :edit, :update, :destroy]
+
+# GET
   def index
     @users = User.all
 
@@ -11,7 +13,6 @@ class UsersController < ApplicationController
 
   # GET
   def show
-    @user = User.find(params[:id])
     @notepads = @user.notepads
     @notes = @user.notes
     respond_to do |format|
@@ -32,12 +33,11 @@ class UsersController < ApplicationController
 
   # GET
   def edit
-    @user = User.find(params[:id])
   end
 
   # POST
   def create
-    @user = User.new(params[:user])
+    @user = User.new(user_params)
 
     respond_to do |format|
       if @user.save
@@ -52,10 +52,8 @@ class UsersController < ApplicationController
 
   # PUT
   def update
-    @user = User.find(params[:id])
-
     respond_to do |format|
-      if @user.update_attributes(params[:user])
+      if @user.update_attributes(user_params)
         format.html { redirect_to @user, notice: 'User was successfully updated.' }
         format.json { head :no_content }
       else
@@ -75,4 +73,15 @@ class UsersController < ApplicationController
       format.json { head :no_content }
     end
   end
+
+  
+  private
+  def set_user
+    @user = User.find(params[:id])
+  end
+
+  def user_params
+    params.require(:user).permit(:name, :email)
+  end
+
 end

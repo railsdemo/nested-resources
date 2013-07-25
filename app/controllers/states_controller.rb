@@ -1,5 +1,8 @@
 class StatesController < ApplicationController
+  before_action :set_state, only: [:show, :edit, :update, :destroy]
   before_filter :load_country, only: [:index, :create, :new]
+  
+
   # GET
   def index
     @states = @country.states
@@ -12,7 +15,6 @@ class StatesController < ApplicationController
 
   # GET
   def show
-    @state = State.find(params[:id])
     @cities = @state.cities
 
     respond_to do |format|
@@ -33,12 +35,11 @@ class StatesController < ApplicationController
 
   # GET
   def edit
-    @state = State.find(params[:id])
   end
 
   # POST
   def create
-    @state = @country.states.new(params[:state])
+    @state = @country.states.new(state_params)
 
     respond_to do |format|
       if @state.save
@@ -53,10 +54,8 @@ class StatesController < ApplicationController
 
   # PUT
   def update
-    @state = State.find(params[:id])
-
     respond_to do |format|
-      if @state.update_attributes(params[:state])
+      if @state.update_attributes(state_params)
         format.html { redirect_to @state, notice: 'State was successfully updated.' }
         format.json { head :no_content }
       else
@@ -68,7 +67,6 @@ class StatesController < ApplicationController
 
   # DELETE
   def destroy
-    @state = State.find(params[:id])
     @state.destroy
 
     respond_to do |format|
@@ -77,7 +75,15 @@ class StatesController < ApplicationController
     end
   end
 
-  protected
+  private
+  def set_state
+    @state = State.find(params[:id])
+  end
+
+  def state_params
+    params.require(:state).permit(:name, :country_id)
+  end
+
   def load_country
       @country = Country.find_by_id(params[:country_id])
   end
